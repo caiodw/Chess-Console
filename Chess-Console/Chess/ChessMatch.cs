@@ -11,14 +11,14 @@ namespace Chess
     internal class ChessMatch
     {
         public Board Board { get; private set; }
-        public int Turn { private get; set; }
-        public Color CurrentPlayer { private get; set; }
+        public int Round { get; private set; }
+        public Color CurrentPlayer {  get; private set; }
         public bool Finished { get; private set; }
 
         public ChessMatch()
         {
             Board = new Board(8,8);
-            Turn = 1;
+            Round = 1;
             CurrentPlayer = Color.White;
             Finished = false;
             PutPieces();
@@ -30,6 +30,23 @@ namespace Chess
             piece.IncreaseAmountMovements();
             Piece capturedPiece = Board.DropPiece(destinationPosition);
             Board.PutPiece(piece, destinationPosition);
+        }
+        public void MakeMove(Position origin,Position destination)
+        {
+            ExecuteMove(origin, destination);
+            Round++;
+            ChangePlayer();
+        }
+        private void ChangePlayer()
+        {
+            if (CurrentPlayer == Color.White)
+            {
+                CurrentPlayer = Color.Black;
+            }
+            else
+            {
+                CurrentPlayer = Color.White;
+            }
         }
         private void PutPieces()
         {

@@ -12,6 +12,9 @@ try
         Console.Clear();
         Screen.PrintBoard(chessMatch.Board);
         Console.WriteLine();
+        Console.WriteLine($"Round: {chessMatch.Round}");
+        Console.WriteLine($"Wainting for: {chessMatch.CurrentPlayer}");
+        Console.WriteLine();
         Console.Write("Origin: ");
         Position origin = Screen.ReedChessPosition().toPosition();
 
@@ -21,7 +24,7 @@ try
         Console.WriteLine();
         Console.Write("Destination: ");
         Position destination = Screen.ReedChessPosition().toPosition();
-        chessMatch.ExecuteMove(origin, destination);
+        chessMatch.MakeMove(origin, destination);
     }
 }
 catch (BoardException boardException)

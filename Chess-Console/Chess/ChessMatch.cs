@@ -24,18 +24,33 @@ namespace Chess
             PutPieces();
         }
 
-        public void ExecuteMove(Position originPosition,Position destinationPosition)
+        public void ExecuteMove(Position sourcePosition, Position destinationPosition)
         {
-            Piece piece=Board.DropPiece(originPosition);
+            Piece piece=Board.DropPiece(sourcePosition);
             piece.IncreaseAmountMovements();
             Piece capturedPiece = Board.DropPiece(destinationPosition);
             Board.PutPiece(piece, destinationPosition);
         }
-        public void MakeMove(Position origin,Position destination)
+        public void MakeMove(Position source, Position destination)
         {
-            ExecuteMove(origin, destination);
+            ExecuteMove(source, destination);
             Round++;
             ChangePlayer();
+        }
+        public void CheckSource(Position position)
+        {
+            if (Board.Piece(position) == null)
+            {
+                throw new BoardException("There is no part in the chosen source position!");
+            }
+            else if (CurrentPlayer != Board.Piece(position).Color)
+            {
+                throw new BoardException("The piece of the chosen source is not yours!");
+            }
+            else if (!Board.Piece(position).IsPossibleToMove())
+            {
+                throw new BoardException("There are no possible movements for the chosen source piece!");
+            }
         }
         private void ChangePlayer()
         {
@@ -58,14 +73,14 @@ namespace Chess
             Board.PutPiece(new Bishop(Board, Color.White), new ChessPosition('f', 1).toPosition());
             Board.PutPiece(new Knight(Board, Color.White), new ChessPosition('g', 1).toPosition());
             Board.PutPiece(new Rook(Board, Color.White), new ChessPosition('h', 1).toPosition());
-            //Board.PutPiece(new Pawn(Board, Color.White), new ChessPosition('a', 2).toPosition());
-            //Board.PutPiece(new Pawn(Board, Color.White), new ChessPosition('b', 2).toPosition());
-            //Board.PutPiece(new Pawn(Board, Color.White), new ChessPosition('c', 2).toPosition());
-            //Board.PutPiece(new Pawn(Board, Color.White), new ChessPosition('d', 2).toPosition());
-            //Board.PutPiece(new Pawn(Board, Color.White), new ChessPosition('e', 2).toPosition());
-            //Board.PutPiece(new Pawn(Board, Color.White), new ChessPosition('f', 2).toPosition());
-            //Board.PutPiece(new Pawn(Board, Color.White), new ChessPosition('g', 2).toPosition());
-            //Board.PutPiece(new Pawn(Board, Color.White), new ChessPosition('h', 2).toPosition());
+            Board.PutPiece(new Pawn(Board, Color.White), new ChessPosition('a', 2).toPosition());
+            Board.PutPiece(new Pawn(Board, Color.White), new ChessPosition('b', 2).toPosition());
+            Board.PutPiece(new Pawn(Board, Color.White), new ChessPosition('c', 2).toPosition());
+            Board.PutPiece(new Pawn(Board, Color.White), new ChessPosition('d', 2).toPosition());
+            Board.PutPiece(new Pawn(Board, Color.White), new ChessPosition('e', 2).toPosition());
+            Board.PutPiece(new Pawn(Board, Color.White), new ChessPosition('f', 2).toPosition());
+            Board.PutPiece(new Pawn(Board, Color.White), new ChessPosition('g', 2).toPosition());
+            Board.PutPiece(new Pawn(Board, Color.White), new ChessPosition('h', 2).toPosition());
 
             Board.PutPiece(new Rook(Board, Color.Black), new ChessPosition('a', 8).toPosition());
             Board.PutPiece(new Knight(Board, Color.Black), new ChessPosition('b', 8).toPosition());
@@ -75,14 +90,14 @@ namespace Chess
             Board.PutPiece(new Bishop(Board, Color.Black), new ChessPosition('f', 8).toPosition());
             Board.PutPiece(new Knight(Board, Color.Black), new ChessPosition('g', 8).toPosition());
             Board.PutPiece(new Rook(Board, Color.Black), new ChessPosition('h', 8).toPosition());
-            //Board.PutPiece(new Pawn(Board, Color.Black), new ChessPosition('a', 7).toPosition());
-            //Board.PutPiece(new Pawn(Board, Color.Black), new ChessPosition('b', 7).toPosition());
-            //Board.PutPiece(new Pawn(Board, Color.Black), new ChessPosition('c', 7).toPosition());
-            //Board.PutPiece(new Pawn(Board, Color.Black), new ChessPosition('d', 7).toPosition());
-            //Board.PutPiece(new Pawn(Board, Color.Black), new ChessPosition('e', 7).toPosition());
-            //Board.PutPiece(new Pawn(Board, Color.Black), new ChessPosition('f', 7).toPosition());
-            //Board.PutPiece(new Pawn(Board, Color.Black), new ChessPosition('g', 7).toPosition());
-            //Board.PutPiece(new Pawn(Board, Color.Black), new ChessPosition('h', 7).toPosition());
+            Board.PutPiece(new Pawn(Board, Color.Black), new ChessPosition('a', 7).toPosition());
+            Board.PutPiece(new Pawn(Board, Color.Black), new ChessPosition('b', 7).toPosition());
+            Board.PutPiece(new Pawn(Board, Color.Black), new ChessPosition('c', 7).toPosition());
+            Board.PutPiece(new Pawn(Board, Color.Black), new ChessPosition('d', 7).toPosition());
+            Board.PutPiece(new Pawn(Board, Color.Black), new ChessPosition('e', 7).toPosition());
+            Board.PutPiece(new Pawn(Board, Color.Black), new ChessPosition('f', 7).toPosition());
+            Board.PutPiece(new Pawn(Board, Color.Black), new ChessPosition('g', 7).toPosition());
+            Board.PutPiece(new Pawn(Board, Color.Black), new ChessPosition('h', 7).toPosition());
         }
     }
 }

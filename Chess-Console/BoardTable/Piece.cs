@@ -25,6 +25,21 @@ namespace BoardTable
         {
             MovesAmount++;
         }
+        public bool IsPossibleToMove()
+        {
+            bool[,] match = AcceptedMoves();
+            for (int i = 0; i < Board.Lines; i++)
+            {
+                for (int j = 0; j < Board.Columns; j++)
+                {
+                    if (match[i,j])
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
         public abstract bool[,] AcceptedMoves();
     }
 }

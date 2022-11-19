@@ -11,7 +11,7 @@ namespace BoardTable
     {
         public Position Position { get; set; }
         public Color Color { get; protected set; }
-        public int QtyMooves { get; set; }
+        public int MovesAmount { get; set; }
         public Board Board { get; set; }
 
         public Piece(Board board, Color color)
@@ -19,7 +19,11 @@ namespace BoardTable
             Position = null;
             Color = color;
             Board = board;
-            QtyMooves = 0;
+            MovesAmount = 0;
+        }
+        public void IncreaseAmountMovements()
+        {
+            MovesAmount++;
         }
     }
 }

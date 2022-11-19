@@ -44,7 +44,17 @@ namespace BoardTable
             Pieces[position.Line, position.Column] = piece;
             piece.Position = position;
         }
-
+        public Piece DropPiece(Position position)
+        {
+            if (Piece(position) == null)
+            {
+                return null;
+            }
+            Piece auxiliaryPiece = Piece(position);
+            auxiliaryPiece.Position = null;
+            Pieces[position.Line,position.Column]= null;
+            return auxiliaryPiece;
+        }
         //Valid position
         public bool ValidPosition(Position position)
         {

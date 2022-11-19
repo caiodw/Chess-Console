@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BoardTable.Enums;
+using Chess;
 
 namespace Xadrez_Console
 {
@@ -44,6 +45,13 @@ namespace Xadrez_Console
                 Console.Write(piece);
                 Console.ForegroundColor= consoleColor;
             }
+        }
+        public static ChessPosition ReedChessPosition()
+        {
+            string s = Console.ReadLine();
+            char column = s[0];
+            int line = int.Parse(s[1] + "");
+            return new ChessPosition(column,line);
         }
     }
 }

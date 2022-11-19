@@ -6,17 +6,17 @@ using BoardTable.Enums;
 
 try
 {
-    Position p;
-    p = new Position(3, 4);
-    Board board = new Board(8, 8);
-    board.PutPiece(new Rook(board, Color.Black), new Position(0, 0));
-    board.PutPiece(new Rook(board, Color.Black), new Position(1, 3));
-    board.PutPiece(new King(board, Color.Black), new Position(2, 4));
-
-    board.PutPiece(new Rook(board,Color.White), new Position(3, 5));
-
-    Screen.PrintBoard(board);
-    Console.ReadLine();
+    ChessMatch chessMatch = new ChessMatch();
+    while (!chessMatch.Finished)
+    {
+        Console.Clear();
+        Screen.PrintBoard(chessMatch.Board);
+        Console.Write("Origin: ");
+        Position origin = Screen.ReedChessPosition().toPosition();
+        Console.Write("Destination: ");
+        Position destination = Screen.ReedChessPosition().toPosition();
+        chessMatch.ExecuteMove(origin, destination);
+    }
 }
 catch (BoardException boardException)
 {

@@ -14,12 +14,12 @@ namespace BoardTable
         public int QtyMooves { get; set; }
         public Board Board { get; set; }
 
-        public Piece(Position position, Color color, Board board)
+        public Piece(Board board, Color color)
         {
-            Position = position;
+            Position = null;
             Color = color;
             Board = board;
-            QtyMooves= 0;
+            QtyMooves = 0;
         }
     }
 }

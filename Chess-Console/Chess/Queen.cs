@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Chess
 {
-    internal class King : Piece
+    internal class Queen : Piece
     {
-        public King(Board board, Color color) : base(board, color)
+        public Queen(Board board, Color color) : base(board, color)
         {
         }
         public override string ToString()
         {
-            return "K";
+            return "Q";
         }
     }
 }

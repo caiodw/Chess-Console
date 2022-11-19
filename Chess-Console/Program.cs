@@ -12,7 +12,6 @@ try
     board.PutPiece(new Rook(board, Color.Black), new Position(0, 0));
     board.PutPiece(new Rook(board, Color.Black), new Position(1, 3));
     board.PutPiece(new King(board, Color.Black), new Position(2, 4));
-    board.PutPiece(new King(board, Color.Black), new Position(0, 9));
     Screen.PrintBoard(board);
     Console.ReadLine();
 }

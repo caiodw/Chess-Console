@@ -25,7 +25,7 @@ namespace BoardTable
 
         public Piece Piece(Position position)
         {
-            return Pieces[position.Line,position.Column];
+            return Pieces[position.Line, position.Column];
         }
 
         public bool PieceExists(Position position)
@@ -52,13 +52,13 @@ namespace BoardTable
             }
             Piece auxiliaryPiece = Piece(position);
             auxiliaryPiece.Position = null;
-            Pieces[position.Line,position.Column]= null;
+            Pieces[position.Line, position.Column]= null;
             return auxiliaryPiece;
         }
-        //Valid position
+        //Valid Position
         public bool ValidPosition(Position position)
         {
-            if (position.Line<0||position.Line>=Lines||position.Column<0||position.Column>=Columns)
+            if (position.Line<0|| position.Line>=Lines|| position.Column<0|| position.Column>=Columns)
             {
                 return false;
             }

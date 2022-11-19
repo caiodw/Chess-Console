@@ -13,6 +13,12 @@ namespace Chess
         public Bishop(Board board, Color color) : base(board, color)
         {
         }
+
+        public override bool[,] AcceptedMoves()
+        {
+            throw new NotImplementedException();
+        }
+
         public override string ToString()
         {
             return "B";

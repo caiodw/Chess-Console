@@ -11,8 +11,14 @@ try
     {
         Console.Clear();
         Screen.PrintBoard(chessMatch.Board);
+        Console.WriteLine();
         Console.Write("Origin: ");
         Position origin = Screen.ReedChessPosition().toPosition();
+
+        bool[,] acceptedMoves = chessMatch.Board.Piece(origin).AcceptedMoves();
+        Console.Clear();
+        Screen.PrintBoard(chessMatch.Board, acceptedMoves);
+        Console.WriteLine();
         Console.Write("Destination: ");
         Position destination = Screen.ReedChessPosition().toPosition();
         chessMatch.ExecuteMove(origin, destination);

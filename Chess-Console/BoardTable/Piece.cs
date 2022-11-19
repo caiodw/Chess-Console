@@ -7,7 +7,7 @@ using BoardTable.Enums;
 
 namespace BoardTable
 {
-    internal class Piece
+    internal abstract class Piece
     {
         public Position Position { get; set; }
         public Color Color { get; protected set; }
@@ -25,5 +25,6 @@ namespace BoardTable
         {
             MovesAmount++;
         }
+        public abstract bool[,] AcceptedMoves();
     }
 }

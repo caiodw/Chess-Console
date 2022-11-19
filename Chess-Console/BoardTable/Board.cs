@@ -34,12 +34,18 @@ namespace BoardTable
             return Piece(position) != null;
         }
 
+        //Add piece to board
         public void PutPiece(Piece piece,Position position)
         {
+            if (PieceExists(position))
+            {
+                throw new BoardException("There's already a piece in that position!");
+            }
             Pieces[position.Line, position.Column] = piece;
             piece.Position = position;
         }
 
+        //Valid position
         public bool ValidPosition(Position position)
         {
             if (position.Line<0||position.Line>=Lines||position.Column<0||position.Column>=Columns)

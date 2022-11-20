@@ -16,6 +16,7 @@ namespace Chess
         public bool Finished { get; private set; }
         public HashSet<Piece> Pieces { get; private set; }
         public HashSet<Piece> Captured { get; private set; }
+        public bool MatchCheck { get; private set; }
 
         public ChessMatch()
         {
@@ -28,9 +29,9 @@ namespace Chess
             PutPieces();
         }
 
-        public void ExecuteMove(Position sourcePosition, Position targetPosition)
+        public Piece ExecuteMove(Position sourcePosition, Position targetPosition)
         {
-            Piece piece=Board.DropPiece(sourcePosition);
+            Piece piece = Board.DropPiece(sourcePosition);
             piece.IncreaseAmountMovements();
             Piece capturedPiece = Board.DropPiece(targetPosition);
             Board.PutPiece(piece, targetPosition);
@@ -38,12 +39,37 @@ namespace Chess
             {
                 Captured.Add(capturedPiece);
             }
+            return capturedPiece;
         }
         public void MakeMove(Position source, Position target)
         {
-            ExecuteMove(source, target);
+            Piece capturedPiece =ExecuteMove(source, target);
+            if (KingIsCheck(CurrentPlayer))
+            {
+                UndoMove(source,target,capturedPiece);
+                throw new BoardException("You can't put yourself in check!");
+            }
+            if (KingIsCheck(OpponentColor(CurrentPlayer)))
+            {
+                MatchCheck = true;
+            }
+            else
+            {
+                MatchCheck = false;
+            }
             Round++;
             ChangePlayer();
+        }
+        public void UndoMove(Position source,Position target, Piece capturedPiece)
+        {
+            Piece piece = Board.DropPiece(target);
+            piece.DecreaseAmountMovements();
+            if (capturedPiece != null)
+            {
+                Board.PutPiece(capturedPiece, target);
+                Captured.Remove(capturedPiece);
+            }
+            Board.PutPiece(piece, source);
         }
         public void CheckSource(Position position)
         {
@@ -109,6 +135,46 @@ namespace Chess
                 }
             }
             return tempPieces;
+        }
+        private Color OpponentColor(Color color)
+        {
+            if (color == Color.White)
+            {
+                return Color.Black;
+            }
+            else
+            {
+                return Color.White;
+            }
+        }
+        private Piece King(Color color)
+        {
+            foreach (Piece piece in PlayablePieces(color))
+            {
+                if (piece is King)
+                {
+                    return piece;
+                }
+            }
+            return null;
+        }
+
+        public bool KingIsCheck(Color color)
+        {
+            Piece king = King(color);   
+            if (king == null)
+            {
+                throw new BoardException($"There's no king of {color} on the board!");
+            }
+            foreach (Piece piece in PlayablePieces(OpponentColor(color)))
+            {
+                bool[,] match = piece.AcceptedMoves();
+                if (match[king.Position.Line,king.Position.Column])
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void PutPieces()

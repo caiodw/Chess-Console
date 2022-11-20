@@ -25,6 +25,10 @@ namespace BoardTable
         {
             MovesAmount++;
         }
+        public void DecreaseAmountMovements()
+        {
+            MovesAmount--;
+        }
         public bool IsPossibleToMove()
         {
             bool[,] match = AcceptedMoves();

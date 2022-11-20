@@ -19,6 +19,10 @@ namespace Xadrez_Console
             Console.WriteLine();
             Console.WriteLine($"Round: {chessMatch.Round}");
             Console.WriteLine($"Wainting for: {chessMatch.CurrentPlayer}");
+            if (chessMatch.MatchCheck)
+            {
+                Console.WriteLine("Your king is CHECK!");
+            }
         }
         public static void PrintCapturedPieces(ChessMatch chessMatch)
         {

@@ -32,6 +32,8 @@ try
             Console.WriteLine(boardException.Message);
             Console.ReadLine();
         }
+        Console.Clear();
+        Screen.PrintChessMatch(chessMatch);
     }
 }
 catch (BoardException boardException)

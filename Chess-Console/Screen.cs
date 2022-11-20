@@ -18,10 +18,18 @@ namespace Xadrez_Console
             PrintCapturedPieces(chessMatch);
             Console.WriteLine();
             Console.WriteLine($"Round: {chessMatch.Round}");
-            Console.WriteLine($"Wainting for: {chessMatch.CurrentPlayer}");
-            if (chessMatch.MatchCheck)
+            if (!chessMatch.Finished)
             {
-                Console.WriteLine("Your king is CHECK!");
+                Console.WriteLine($"Wainting for: {chessMatch.CurrentPlayer}");
+                if (chessMatch.MatchCheck)
+                {
+                    Console.WriteLine("CHECK!");
+                }
+            }
+            else
+            {
+                Console.WriteLine("CHECKMATE");
+                Console.WriteLine($"Winner: {chessMatch.CurrentPlayer}");
             }
         }
         public static void PrintCapturedPieces(ChessMatch chessMatch)
@@ -73,10 +81,6 @@ namespace Xadrez_Console
                     {
                         Console.BackgroundColor = changedBackgroundColor;
                     }
-                    //else
-                    //{
-                    //    Console.BackgroundColor=originalBackgroundColor;
-                    //}
                     PrintPiece(board.Piece(i, j));
                     Console.BackgroundColor = originalBackgroundColor;
                 }

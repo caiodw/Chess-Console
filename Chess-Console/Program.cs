@@ -12,10 +12,8 @@ try
         try
         {
             Console.Clear();
-            Screen.PrintBoard(chessMatch.Board);
-            Console.WriteLine();
-            Console.WriteLine($"Round: {chessMatch.Round}");
-            Console.WriteLine($"Wainting for: {chessMatch.CurrentPlayer}");
+            Screen.PrintChessMatch(chessMatch);
+
             Console.WriteLine();
             Console.Write("Source: ");
             Position source = Screen.ReedChessPosition().toPosition();

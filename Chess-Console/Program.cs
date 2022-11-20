@@ -24,9 +24,10 @@ try
             Console.Clear();
             Screen.PrintBoard(chessMatch.Board, acceptedMoves);
             Console.WriteLine();
-            Console.Write("Destination: ");
-            Position destination = Screen.ReedChessPosition().toPosition();
-            chessMatch.MakeMove(source, destination);
+            Console.Write("Target: ");
+            Position target = Screen.ReedChessPosition().toPosition();
+            chessMatch.CheckTarget(source, target);
+            chessMatch.MakeMove(source, target);
         }
         catch (BoardException boardException)
         {

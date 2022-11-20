@@ -24,16 +24,16 @@ namespace Chess
             PutPieces();
         }
 
-        public void ExecuteMove(Position sourcePosition, Position destinationPosition)
+        public void ExecuteMove(Position sourcePosition, Position targetPosition)
         {
             Piece piece=Board.DropPiece(sourcePosition);
             piece.IncreaseAmountMovements();
-            Piece capturedPiece = Board.DropPiece(destinationPosition);
-            Board.PutPiece(piece, destinationPosition);
+            Piece capturedPiece = Board.DropPiece(targetPosition);
+            Board.PutPiece(piece, targetPosition);
         }
-        public void MakeMove(Position source, Position destination)
+        public void MakeMove(Position source, Position target)
         {
-            ExecuteMove(source, destination);
+            ExecuteMove(source, target);
             Round++;
             ChangePlayer();
         }
@@ -50,6 +50,13 @@ namespace Chess
             else if (!Board.Piece(position).IsPossibleToMove())
             {
                 throw new BoardException("There are no possible movements for the chosen source piece!");
+            }
+        }
+        public void CheckTarget(Position source,Position target)
+        {
+            if (!Board.Piece(source).CheckMoveFor(target))
+            {
+                throw new BoardException("Invalid target position!");
             }
         }
         private void ChangePlayer()

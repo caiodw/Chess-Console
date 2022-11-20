@@ -40,6 +40,10 @@ namespace BoardTable
             }
             return false;
         }
+        public bool CheckMoveFor(Position position)
+        {
+            return AcceptedMoves()[position.Line, position.Column];
+        }
         public abstract bool[,] AcceptedMoves();
     }
 }

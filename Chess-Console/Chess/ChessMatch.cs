@@ -90,6 +90,39 @@ namespace Chess
                 UndoMove(source, target, capturedPiece);
                 throw new BoardException("You can't put yourself in check!");
             }
+            Piece piece = Board.Piece(target);
+
+            //Special move Promotion
+            if (piece is Pawn)
+            {
+                if ((piece.Color==Color.White && target.Line == 0) || (piece.Color == Color.Black && target.Line == 7))
+                {
+                    piece = Board.DropPiece(target);
+                    Pieces.Remove(piece);
+                    //Change to chouse Rook/Bishop/Knight/Queen 
+                    Console.Write($"Chouse target promote piece (R - Rook/ B - Bishop /K - Knight/ Q - Queen): ");
+                    char pieceType = char.Parse(Console.ReadLine().ToUpper());
+                    Piece piecePromote;
+                    switch (pieceType)
+                    {
+                        case 'R':
+                            piecePromote = new Rook(Board, piece.Color);
+                            break;
+                        case 'B':
+                            piecePromote = new Bishop(Board, piece.Color);
+                            break;
+                        case 'K':
+                            piecePromote = new Knight(Board, piece.Color);
+                            break;
+                        default:
+                            piecePromote = new Queen(Board, piece.Color);
+                            break;
+                    }
+                    Board.PutPiece(piecePromote, target);
+                    Pieces.Add(piecePromote);
+                }
+            }
+
             if (IsCheck(OpponentColor(CurrentPlayer)))
             {
                 MatchCheck = true;
@@ -107,8 +140,6 @@ namespace Chess
                 Round++;
                 ChangePlayer();
             }
-            Piece piece = Board.Piece(target);
-
             //Special move En Passant
             if (piece is Pawn && (target.Line == source.Line-2 || target.Line == source.Line + 2))
             {

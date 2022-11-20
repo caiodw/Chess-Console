@@ -14,9 +14,66 @@ namespace Chess
         {
         }
 
+        private bool IsAcceptedMove(Position position)
+        {
+            Piece piece = Board.Piece(position);
+            return piece == null || piece.Color != Color;
+        }
+
         public override bool[,] AcceptedMoves()
         {
-            throw new NotImplementedException();
+            bool[,] match = new bool[Board.Lines, Board.Columns];
+            Position position = new Position(0, 0);
+
+            position.SetValues(Position.Line - 1, Position.Column - 2);
+            if (Board.ValidPosition(position) && IsAcceptedMove(position))
+            {
+                match[position.Line, position.Column] = true;
+            }
+
+            position.SetValues(Position.Line - 2, Position.Column - 1);
+            if (Board.ValidPosition(position) && IsAcceptedMove(position))
+            {
+                match[position.Line, position.Column] = true;
+            }
+
+            position.SetValues(Position.Line - 2, Position.Column + 1);
+            if (Board.ValidPosition(position) && IsAcceptedMove(position))
+            {
+                match[position.Line, position.Column] = true;
+            }
+
+            position.SetValues(Position.Line - 1, Position.Column + 2);
+            if (Board.ValidPosition(position) && IsAcceptedMove(position))
+            {
+                match[position.Line, position.Column] = true;
+            }
+
+            position.SetValues(Position.Line +1, Position.Column + 2);
+            if (Board.ValidPosition(position) && IsAcceptedMove(position))
+            {
+                match[position.Line, position.Column] = true;
+            }
+
+            position.SetValues(Position.Line + 2, Position.Column + 1);
+            if (Board.ValidPosition(position) && IsAcceptedMove(position))
+            {
+                match[position.Line, position.Column] = true;
+            }
+
+            position.SetValues(Position.Line + 2, Position.Column -1);
+            if (Board.ValidPosition(position) && IsAcceptedMove(position))
+            {
+                match[position.Line, position.Column] = true;
+            }
+
+            position.SetValues(Position.Line + 1, Position.Column - 2);
+            if (Board.ValidPosition(position) && IsAcceptedMove(position))
+            {
+                match[position.Line, position.Column] = true;
+            }
+
+            return match;
         }
 
         public override string ToString()

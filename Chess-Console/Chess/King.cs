@@ -10,14 +10,23 @@ namespace Chess
 {
     internal class King : Piece
     {
-        public King(Board board, Color color) : base(board, color)
+        public ChessMatch ChessMatch { get; private set; }
+
+        public King(Board board, Color color, ChessMatch chessMatch) : base(board, color)
         {
+            ChessMatch = chessMatch;
         }
 
         private bool IsAcceptedMove(Position position)
         {
             Piece piece = Board.Piece(position);
             return piece == null || piece.Color != Color;
+        }
+
+        private bool TestRookToCastle(Position position)
+        {
+            Piece piece = Board.Piece(position);
+            return piece != null & piece is Rook && piece.Color == Color && piece.MovesAmount == 0;
         }
 
         public override bool[,] AcceptedMoves()
@@ -72,6 +81,36 @@ namespace Chess
             {
                 match[position.Line, position.Column] = true;
             }
+
+            //Special moves
+            //Castle
+            if (MovesAmount==0 && !ChessMatch.MatchCheck)
+            {
+                //Litle Castle
+                Position rookPosition1 = new Position(Position.Line, Position.Column + 3);
+                if (TestRookToCastle(rookPosition1))
+                {
+                    Position position1 = new Position(Position.Line, Position.Column + 1);
+                    Position position2 = new Position(Position.Line, Position.Column + 2);
+                    if (Board.Piece(position1)==null && Board.Piece(position2)==null)
+                    {
+                        match[position.Line, position.Column + 2] = true;
+                    }
+                }
+                //Big Castle
+                Position rookPosition2 = new Position(Position.Line, Position.Column - 4);
+                if (TestRookToCastle(rookPosition2))
+                {
+                    Position position1 = new Position(Position.Line, Position.Column - 1);
+                    Position position2 = new Position(Position.Line, Position.Column - 2);
+                    Position position3 = new Position(Position.Line, Position.Column - 3);
+                    if (Board.Piece(position1) == null && Board.Piece(position2) == null && Board.Piece(position3) == null)
+                    {
+                        match[position.Line, position.Column - 2] = true;
+                    }
+                }
+            }
+
             return match;
         }
 

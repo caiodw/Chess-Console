@@ -10,8 +10,11 @@ namespace Chess
 {
     internal class Pawn : Piece
     {
-        public Pawn(Board board, Color color) : base(board, color)
+        public ChessMatch ChessMatch { get; private set; }
+
+        public Pawn(Board board, Color color,ChessMatch chessMatch) : base(board, color)
         {
+            ChessMatch = chessMatch;
         }
 
         private bool Enemy(Position position)
@@ -51,6 +54,20 @@ namespace Chess
                 {
                     match[position.Line, position.Column] = true;
                 }
+                //Special move En Passant
+                if (Position.Line == 3)
+                {
+                    Position leftPosition = new Position(Position.Line, Position.Column - 1);
+                    if (Board.ValidPosition(leftPosition) && Enemy(leftPosition) && Board.Piece(leftPosition) == ChessMatch.VulnerableEnPassant)
+                    {
+                        match[leftPosition.Line-1, leftPosition.Column] = true;
+                    }
+                    Position rightPosition = new Position(Position.Line, Position.Column + 1);
+                    if (Board.ValidPosition(rightPosition) && Enemy(rightPosition) && Board.Piece(rightPosition) == ChessMatch.VulnerableEnPassant)
+                    {
+                        match[rightPosition.Line-1, rightPosition.Column] = true;
+                    }
+                }
             }
             else
             {
@@ -73,6 +90,20 @@ namespace Chess
                 if (Board.ValidPosition(position) && Enemy(position))
                 {
                     match[position.Line, position.Column] = true;
+                }
+                //Special move En Passant
+                if (Position.Line == 4)
+                {
+                    Position leftPosition = new Position(Position.Line, Position.Column - 1);
+                    if (Board.ValidPosition(leftPosition) && Enemy(leftPosition) && Board.Piece(leftPosition) == ChessMatch.VulnerableEnPassant)
+                    {
+                        match[leftPosition.Line +1, leftPosition.Column] = true;
+                    }
+                    Position rightPosition = new Position(Position.Line, Position.Column + 1);
+                    if (Board.ValidPosition(rightPosition) && Enemy(rightPosition) && Board.Piece(rightPosition) == ChessMatch.VulnerableEnPassant)
+                    {
+                        match[rightPosition.Line +1, rightPosition.Column] = true;
+                    }
                 }
             }
             return match;
